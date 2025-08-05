@@ -10,17 +10,17 @@ binary_tree_t *binary_tree_node(binary_tree_t *parent, int value)
 {
 	binary_tree_t *new_node;
 
-	if (value == '\0')
-		return (NULL);
-
 	new_node = malloc(sizeof(binary_tree_t));
+                                                            /* Vérifie si l'allocation de mémoire a échoué */
 	if (new_node == NULL)
 		return (NULL);
-
+	                                                        /* Initialise le nouveau nœud avec les valeurs fournies */
 	new_node->n = value;
 	new_node->parent = parent;
+	                                                        
 	new_node->left = NULL;
 	new_node->right = NULL;
 
+	                                                        /* Renvoie le pointeur vers le nœud fraîchement créé et initialisé */
 	return (new_node);
 }
