@@ -30,13 +30,14 @@ return (left_h > right_h ? left_h : right_h);
 
 int binary_tree_is_perfect(const binary_tree_t *tree)
 {
+    
     size_t height = 0;
     size_t size = 0;
 
 
     if (tree == NULL)
     { 
-        return (1);
+        return (0);
     }
 
     height = binary_tree_height(tree);
