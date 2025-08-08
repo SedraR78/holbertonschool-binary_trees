@@ -1,46 +1,39 @@
 #include "binary_trees.h"
 
-/*
- * binary_tree_size - Measures the size of a binary tree.
+static int is_perfect_recursive(const binary_tree_t *tree, int depth, int level);
+/**
+ * binary_tree_is_perfect - Checks if a binary tree is perfect.
  * @tree: A pointer to the root node of the tree.
- * Return: The size of the tree, or 0 if tree is NULL.
+ * Return: 1 if the tree is perfect, 0 otherwise.
  */
-size_t binary_tree_size(const binary_tree_t *tree)
-{
-	if (tree == NULL)
-		return (0);
-
-	return (1 + binary_tree_size(tree->left) + binary_tree_size(tree->right));
-}
-/*
- * binary_tree_height - Measures the height of a binary tree.
- * @tree: A pointer to the root node of the tree.
- * Return: The height of the tree, or 0 if tree is NULL.
- */
-size_t binary_tree_height(const binary_tree_t *tree)
-{
-	size_t left_height, right_height;
-
-	if (tree == NULL)
-		return (0);
-
-	left_height = binary_tree_height(tree->left);
-	right_height = binary_tree_height(tree->right);
-
-	return (1 + (left_height > right_height ? left_height : right_height));
-}
-
 int binary_tree_is_perfect(const binary_tree_t *tree)
 {
-    size_t height = 0;
-    size_t size = 0;
+	int depth;
 
-    if (tree == NULL)
-    { 
-        return (0);
-    }
-    height = binary_tree_height(tree);
-    size = binary_tree_size(tree);
+	if (tree == NULL)
+		return (0);
 
-return (size == ((size_t)1 << (height + 1)) - 1);
+	depth = binary_tree_height(tree);
+	return (is_perfect_recursive(tree, depth, 0));
+}
+/**
+ * is_perfect_recursive - Checks if all leaves are at the same level.
+ * @tree: A pointer to the current node.
+ * @depth: The depth of the first leaf found.
+ * @level: The current level of the node.
+ * Return: 1 if all leaves are at the same level, 0 otherwise.
+ */
+static int is_perfect_recursive(const binary_tree_t *tree, int depth, int level)
+{
+	if (tree == NULL)
+		return (1);
+
+	if (tree->left == NULL && tree->right == NULL)
+		return (depth == level);
+
+	if (tree->left == NULL || tree->right == NULL)
+		return (0);
+
+	return (is_perfect_recursive(tree->left, depth, level + 1) &&
+			is_perfect_recursive(tree->right, depth, level + 1));
 }
