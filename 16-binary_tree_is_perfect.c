@@ -1,6 +1,26 @@
 #include "binary_trees.h"
 
+/**
+ * binary_tree_height - Measures the height of a binary tree.
+ * @tree: A pointer to the root node of the tree.
+ * Return: The height of the tree, or 0 if tree is NULL.
+ */
+size_t binary_tree_height(const binary_tree_t *tree)
+{
+	size_t left_height;
+	size_t right_height;
+
+	if (tree == NULL)
+		return (0);
+
+	left_height = binary_tree_height(tree->left);
+	right_height = binary_tree_height(tree->right);
+
+	return (1 + (left_height > right_height ? left_height : right_height));
+}
+
 static int is_perfect_recursive(const binary_tree_t *tree, int depth, int level);
+
 /**
  * binary_tree_is_perfect - Checks if a binary tree is perfect.
  * @tree: A pointer to the root node of the tree.
@@ -16,6 +36,7 @@ int binary_tree_is_perfect(const binary_tree_t *tree)
 	depth = binary_tree_height(tree);
 	return (is_perfect_recursive(tree, depth, 0));
 }
+
 /**
  * is_perfect_recursive - Checks if all leaves are at the same level.
  * @tree: A pointer to the current node.
